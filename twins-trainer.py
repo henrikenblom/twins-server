@@ -8,6 +8,7 @@ import face_recognition
 from face_recognition import face_locations
 import sys
 import os
+import re
 
 def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_tree', verbose=False):
     X = []
