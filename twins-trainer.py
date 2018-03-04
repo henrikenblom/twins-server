@@ -12,12 +12,14 @@ import os
 import re
 
 def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_tree', verbose=False):
+    print('Training...')
     X = []
     y = []
     for class_dir in listdir(train_dir):
         if not isdir(join(train_dir, class_dir)):
             continue
         for img_path in image_files_in_folder(join(train_dir, class_dir)):
+            print('Creating model from ', img_path)
             image = face_recognition.load_image_file(img_path)
             faces_bboxes = face_locations(image)
             if len(faces_bboxes) != 1:
