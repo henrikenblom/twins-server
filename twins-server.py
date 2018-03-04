@@ -27,11 +27,11 @@ def extract_most_significant_face(file_stream):
     face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
 
     if not face_locations:
-    	print('No face')
+        print('No face')
         raise LookupError('No face found')
 
     if len(face_locations) == 1:
-    	print('Found one face')
+        print('Found one face')
         return image[face_locations[0]]
 
 
