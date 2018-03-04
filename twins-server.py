@@ -29,7 +29,7 @@ def extract_most_significant_face(file_stream):
         raise LookupError('No face found')
 
     largest_area = 0
-    selected_location face_locations[0]
+    selected_location = face_locations[0]
     for face_location in face_locations:
         
         top, right, bottom, left = face_location
