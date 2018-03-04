@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/compare-by-photo', methods=['POST'])
+@app.route('/compare_by_photo', methods=['POST'])
 def compare_by_photo():
     file = request.files['file']
     #return (file, request.form['userId'])
