@@ -30,7 +30,7 @@ def extract_most_significant_face(file_stream):
 
     if len(face_locations) == 1:
         print('Found one face')
-        return image[face_locations[0]]
+        return image[(face_locations[0])]
 
 
     
