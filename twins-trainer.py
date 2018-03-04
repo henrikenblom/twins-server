@@ -41,4 +41,4 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
 
 if __name__ == "__main__":
     if (len(sys.argv) > 1):
-        train(sys.argv[1:], sys.argv[2:])
+        train(sys.argv[1], sys.argv[2])
