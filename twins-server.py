@@ -13,7 +13,9 @@ def compare_by_photo():
     try:
     	main_face_image = Image.fromarray(extract_most_significant_face(file))
     	main_face_image.save('main_face.jpg', 'jpeg')
-
+    except (LookupError):
+    	pass
+ 
 
 def extract_most_significant_face(file_stream):
 	pil_image = rotate_image(Image.open(file_stream))
