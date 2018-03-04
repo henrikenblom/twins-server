@@ -17,7 +17,7 @@ def compare_by_photo():
         main_face_image.save('main_face.jpg', 'jpeg')
     except (LookupError):
         pass
-
+    return jsonify('ok')
 
 def extract_most_significant_face(file_stream):
     pil_image = rotate_image(Image.open(file_stream))
