@@ -17,6 +17,7 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
         if not isdir(join(train_dir, class_dir)):
             continue
         for img_path in image_files_in_folder(join(train_dir, class_dir)):
+            print("Creating model from ", img_path)
             image = face_recognition.load_image_file(img_path)
             faces_bboxes = face_locations(image)
             if len(faces_bboxes) != 1:
@@ -42,7 +43,7 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
 
 
 def image_files_in_folder(folder):
-    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.jpg', f, flags=re.I) && !re.match(r'\\.')]
 
 
 if __name__ == "__main__":
