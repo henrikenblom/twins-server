@@ -43,7 +43,7 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
 
 
 def image_files_in_folder(folder):
-    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.jpg', f, flags=re.I) and !re.match(r'\\.')]
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.jpg', f, flags=re.I) and not re.match(r'\\.')]
 
 
 if __name__ == "__main__":
