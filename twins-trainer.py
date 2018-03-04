@@ -1,5 +1,7 @@
 from math import sqrt
 from sklearn import neighbors
+from os import listdir
+from os.path import isdir, join, isfile, splitext
 import pickle
 from PIL import Image, ImageFont, ImageDraw, ImageEnhance
 import face_recognition
