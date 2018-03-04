@@ -11,7 +11,8 @@ def compare_by_photo():
     file = request.files['file']
     #return (file, request.form['userId'])
     try:
-    	extract_most_significant_face(file)
+    	main_face_image = Image.fromarray(extract_most_significant_face(file))
+    	main_face_image.save('main_face.jpg', 'jpeg')
 
 
 def extract_most_significant_face(file_stream):
