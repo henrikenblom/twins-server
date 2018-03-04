@@ -28,10 +28,18 @@ def extract_most_significant_face(file_stream):
         print('No face')
         raise LookupError('No face found')
 
-    if len(face_locations) == 1:
-        print('Found one face')
-        return image[(face_locations[0])]
+    largest_area = 0
+    selected_location face_locations[0]
+    for face_location in face_locations:
+        
+        top, right, bottom, left = face_location
+        area = (bottom - top) * (right - left)
+        if (area > largest_area):
+            largest_area = area
+            selected_location = face_location
 
+    top, right, bottom, left = selected_location
+    return image[top:bottom, left:right]
 
     
 def rotate_image(image):
