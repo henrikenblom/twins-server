@@ -12,6 +12,7 @@ CORS(app)
 
 @app.route('/compare_by_photo', methods=['POST'])
 def compare_by_photo():
+    print('here')
     file = request.files['file']
     main_face_image = Image.fromarray(extract_most_significant_face(file))
     main_face_image.save('main_face.jpg', 'jpeg')
