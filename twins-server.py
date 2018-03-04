@@ -13,12 +13,8 @@ CORS(app)
 @app.route('/compare_by_photo', methods=['POST'])
 def compare_by_photo():
     file = request.files['file']
-    #return (file, request.form['userId'])
-    try:
-        main_face_image = Image.fromarray(extract_most_significant_face(file))
-        main_face_image.save('main_face.jpg', 'jpeg')
-    except (LookupError):
-        pass
+    main_face_image = Image.fromarray(extract_most_significant_face(file))
+    main_face_image.save('main_face.jpg', 'jpeg')
     return jsonify('ok')
 
 def extract_most_significant_face(file_stream):
