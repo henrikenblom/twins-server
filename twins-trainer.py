@@ -1,12 +1,11 @@
 from math import sqrt
 from sklearn import neighbors
-from os import listdir
-from os.path import isdir, join, isfile, splitext
 import pickle
 from PIL import Image, ImageFont, ImageDraw, ImageEnhance
 import face_recognition
 from face_recognition import face_locations
 import sys
+import os
 
 def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_tree', verbose=False):
     X = []
