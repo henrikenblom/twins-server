@@ -22,6 +22,7 @@ def compare_by_photo():
     return jsonify('ok')
 
 def extract_most_significant_face(file_stream):
+	print('here')
     pil_image = rotate_image(Image.open(file_stream))
     image = np.array(pil_image)
     face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
