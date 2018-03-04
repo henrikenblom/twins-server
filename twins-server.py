@@ -6,6 +6,8 @@ import numpy as np
 from PIL import Image, ImageEnhance, ImageOps, ImageDraw, ExifTags
 from flask import Flask, request, jsonify
 
+app = Flask(__name__)
+
 @app.route('/compare-by-photo', methods=['POST'])
 def compare_by_photo():
     file = request.files['file']
