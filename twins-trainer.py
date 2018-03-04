@@ -41,8 +41,12 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
     return knn_clf
 
 
+
 def image_files_in_folder(folder):
-    return glob.glob(folder + '/*/*[0-9].jpg', recursive=True)
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
+
+#def image_files_in_folder(folder):
+#    return glob.glob(folder + '/*/*[0-9].jpg', recursive=True)
 
 
 if __name__ == "__main__":
