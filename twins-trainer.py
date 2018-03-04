@@ -6,7 +6,6 @@ import pickle
 from PIL import Image, ImageFont, ImageDraw, ImageEnhance
 import face_recognition
 from face_recognition import face_locations
-from face_recognition.cli import image_files_in_folder
 import sys
 
 def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_tree', verbose=False):
@@ -38,6 +37,11 @@ def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_
         with open(model_save_path, 'wb') as f:
             pickle.dump(knn_clf, f)
     return knn_clf
+
+
+def image_files_in_folder(folder):
+    return [os.path.join(folder, f) for f in os.listdir(folder) if re.match(r'.*\.(jpg|jpeg|png)', f, flags=re.I)]
+
 
 if __name__ == "__main__":
     if (len(sys.argv) > 1):
