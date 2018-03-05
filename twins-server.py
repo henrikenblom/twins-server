@@ -91,7 +91,7 @@ def identify(image):
 
 def compare(image):
     for class_dir in listdir(CLASSES_DIR):
-        model_files = glob.glob(join(train_dir, class_dir,'/model.dat'), recursive=False)
+        model_files = glob.glob(join(CLASSES_DIR, class_dir, '/model.dat'), recursive=False)
         if (model_files):
             print('OK')
 
