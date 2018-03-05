@@ -92,8 +92,7 @@ def identify(image):
 def compare(image):
     for class_dir in listdir(CLASSES_DIR):
         model_files = glob.glob(join(CLASSES_DIR, class_dir, '/model.dat'), recursive=False)
-        if (model_files):
-            print('OK')
+        print(model_files[0])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
