@@ -61,11 +61,8 @@ def rotate_image(image):
 def identify(image):
     with open(MODEL_PATH, 'rb') as f:
             knn_clf = pickle.load(f)
-    X_faces_loc = face_locations(image)
-    if len(X_faces_loc) == 0:
-        return []
 
-    faces_encodings = face_recognition.face_encodings(X_img, known_face_locations=X_faces_loc)
+    faces_encodings = face_recognition.face_encodings(image)
 
     closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
 
