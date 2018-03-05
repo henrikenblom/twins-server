@@ -97,9 +97,10 @@ def compare(image, user_id):
     models = []
 
     for class_dir in listdir(CLASSES_DIR):
-        model_files = glob.glob(join(CLASSES_DIR, '8RnReLlhbuIPvbwef6Hq', 'model.dat'), recursive=False)
+        model_files = glob.glob(join(CLASSES_DIR, '4MsCszuADLUDV4yDe8pw', 'model.dat'), recursive=False)
         if (model_files):
             with open(model_files[0], 'rb') as f:
+                print(f)
                 model = pickle.load(f)
                 models.append(model)
                 classes.append(class_dir)
