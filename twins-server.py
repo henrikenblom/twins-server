@@ -106,7 +106,7 @@ def compare(image, user_id):
                 f.close()
 
     current_face_model = face_recognition.face_encodings(image)[0]
-    face_distances = face_recognition.face_distance(classes, current_face_model)
+    face_distances = face_recognition.face_distance([current_face_model], current_face_model)
 
     closest_distance = 100
     twin_id = ''
