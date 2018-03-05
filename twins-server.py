@@ -100,8 +100,10 @@ def compare(image, user_id):
         model_files = glob.glob(join(CLASSES_DIR, class_dir, 'model.dat'), recursive=False)
         if (model_files):
             with open(model_files[0], 'rb') as f:
-                models.append(pickle.load(f))
+                model = pickle.load(f)
+                models.append(model)
                 classes.append(class_dir)
+                f.close()
 
     current_face_model = face_recognition.face_encodings(image)[0]
     face_distances = face_recognition.face_distance(classes, current_face_model)
