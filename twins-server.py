@@ -33,8 +33,11 @@ def compare_by_photo():
             identified_user_id=identified_user_id,
             face_count=face_count)
     else:
-        compare(face_image)
-        return jsonify(status='OK')
+        twin_id, closest_distance = compare(face_image)
+        return jsonify(status='OK',
+            face_count=face_count,
+            twin_id=twin_id,
+            closest_distance=closest_distance)
 
 
 def extract_most_significant_face(file_stream):
@@ -89,11 +92,30 @@ def identify(image):
     return user_id
 
 
-def compare(image):
+def compare(image, user_id):
+    classes = []
+    models = []
+
     for class_dir in listdir(CLASSES_DIR):
         model_files = glob.glob(join(CLASSES_DIR, class_dir, 'model.dat'), recursive=False)
         if (model_files):
-            print(model_files[0])
+            with open(model_files[0], 'rb') as f:
+                models.append(pickle.load(f))
+                classes.append(class_dir)
+                f.close()
+
+    current_face_model = face_recognition.face_encodings(image)[0]
+    face_distances = face_recognition.face_distance(classes, current_face_model)
+
+    closest_distance = 100
+    twin_id = ''
+    for i, face_distance in face_distances:
+        if (classes[i] != user_id
+            and face_distance < closest_distance):
+        twin_id = classes[i]
+        closest_distance = face_distance
+
+    return twin_id, closest_distance
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
