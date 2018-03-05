@@ -100,6 +100,7 @@ def compare(image, user_id):
         model_files = glob.glob(join(CLASSES_DIR, class_dir, 'model.dat'), recursive=False)
         if (model_files):
             with open(model_files[0], 'rb') as f:
+                print(f)
                 models.append(pickle.load(f))
                 classes.append(class_dir)
                 f.close()
