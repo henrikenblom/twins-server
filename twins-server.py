@@ -66,10 +66,8 @@ def identify(image):
 
     closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
 
-    is_recognized = [closest_distances[0][i][0] <= DIST_THRESH for i in range(len(X_faces_loc))]
-
     # predict classes and cull classifications that are not with high confidence
-    return [(pred, loc) if rec else ("N/A", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), X_faces_loc, is_recognized)]
+    return knn_clf.predict(faces_encodings)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
