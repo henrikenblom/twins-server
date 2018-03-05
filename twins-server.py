@@ -62,8 +62,8 @@ def identify(image):
     with open(MODEL_PATH, 'rb') as f:
             knn_clf = pickle.load(f)
     try:
-        user_id = knn_clf.predict(face_recognition.face_encodings(image))[0]
-    except
+        user_id = knn_clf.predict(face_recognition.face_encodings(image))[1]
+    except (IndexError)
         user_id = ''
     f.close()
     return user_id
