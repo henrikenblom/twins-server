@@ -64,9 +64,11 @@ def identify(image):
 
     faces_encodings = face_recognition.face_encodings(image)
 
-    closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=2)
+    closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
 
-    return knn_clf.predict(faces_encodings)[1]
+    print(closest_distances)
+
+    return knn_clf.predict(faces_encodings)[0]
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
