@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 from os import listdir
 from os.path import isdir, join, isfile, splitext
+import glob
 from PIL import Image, ImageEnhance, ImageOps, ImageDraw, ExifTags
 from flask import Flask, request, jsonify
 from flask_cors import CORS
