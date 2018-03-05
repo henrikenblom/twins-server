@@ -7,15 +7,14 @@ from PIL import Image, ImageEnhance, ImageOps, ImageDraw, ExifTags
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+MODEL_PATH = 'party_model.dat'
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/compare_by_photo', methods=['POST'])
 def compare_by_photo():
     file = request.files['file']
-    main_face_image = Image.fromarray(extract_most_significant_face(file))
-    main_face_image.save('main_face.jpg', 'jpeg')
-    return jsonify('ok')
+    return jsonify(identify(extract_most_significant_face(file)))
 
 def extract_most_significant_face(file_stream):
     pil_image = rotate_image(Image.open(file_stream))
@@ -60,8 +59,20 @@ def rotate_image(image):
 
 
 def identify(image):
-    
+    with open(MODEL_PATH, 'rb') as f:
+            knn_clf = pickle.load(f)
+    X_faces_loc = face_locations(image)
+    if len(X_faces_loc) == 0:
+        return []
 
+    faces_encodings = face_recognition.face_encodings(X_img, known_face_locations=X_faces_loc)
+
+    closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
+
+    is_recognized = [closest_distances[0][i][0] <= DIST_THRESH for i in range(len(X_faces_loc))]
+
+    # predict classes and cull classifications that are not with high confidence
+    return [(pred, loc) if rec else ("N/A", loc) for pred, loc, rec in zip(knn_clf.predict(faces_encodings), X_faces_loc, is_recognized)]
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
