@@ -108,10 +108,10 @@ def compare(image, user_id):
     current_face_model = face_recognition.face_encodings(image)[0]
     face_distances = face_recognition.face_distance(models, current_face_model)
 
-    closest_distance = 100
+    closest_distance = 10
     twin_id = ''
     for i, face_distance in enumerate(face_distances):
-        if (classes[i] != user_id and face_distance < closest_distance):
+        if (face_distance < closest_distance):
             twin_id = classes[i]
             closest_distance = face_distance
 
