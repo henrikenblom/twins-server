@@ -59,5 +59,9 @@ def rotate_image(image):
     return image
 
 
+def identify(image):
+    
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
