@@ -11,7 +11,7 @@ import glob
 import os
 import re
 
-def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'ball_tree', verbose=False):
+def train(train_dir, model_save_path = "", n_neighbors = None, knn_algo = 'brute', verbose=False):
     print('Training...')
     X = []
     y = []
