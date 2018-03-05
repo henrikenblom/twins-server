@@ -14,7 +14,7 @@ CORS(app)
 @app.route('/compare_by_photo', methods=['POST'])
 def compare_by_photo():
     file = request.files['file']
-    return jsonify(identify(extract_most_significant_face(file)))
+    identified_user_id = jsonify(identify(extract_most_significant_face(file)))
 
 def extract_most_significant_face(file_stream):
     pil_image = rotate_image(Image.open(file_stream))
@@ -61,7 +61,10 @@ def rotate_image(image):
 def identify(image):
     with open(MODEL_PATH, 'rb') as f:
             knn_clf = pickle.load(f)
-    user_id = knn_clf.predict(face_recognition.face_encodings(image))[0]
+    try:
+        user_id = knn_clf.predict(face_recognition.face_encodings(image))[0]
+    except
+        user_id = ''
     f.close()
     return user_id
 
