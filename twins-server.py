@@ -33,7 +33,7 @@ def compare_by_photo():
             identified_user_id=identified_user_id,
             face_count=face_count)
     else:
-        twin_id, closest_distance = compare(face_image)
+        twin_id, closest_distance = compare(face_image, user_id)
         return jsonify(status='OK',
             face_count=face_count,
             twin_id=twin_id,
