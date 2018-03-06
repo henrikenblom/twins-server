@@ -28,7 +28,9 @@ def compare_by_photo():
 
     identified_user_id = identify(face_image)
 
-    if (user_id != identified_user_id):
+    if (identified_user_id == ''):
+        return jsonify(status='NO_FULL_FACE')
+    elif (user_id != identified_user_id):
         return jsonify(status='PRANK_TRY',
             identified_user_id=identified_user_id,
             face_count=face_count)
