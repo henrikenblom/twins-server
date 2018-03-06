@@ -64,7 +64,7 @@ def extract_most_significant_face(file_stream):
             selected_location = face_location
 
     top, right, bottom, left = selected_location
-    return image[top:bottom, left:right], len(face_locations)
+    return image, len(face_locations)
 
     
 def rotate_image(image):
