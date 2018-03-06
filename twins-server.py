@@ -24,12 +24,12 @@ def compare_by_photo():
     try:
         face_image, face_count = extract_most_significant_face(file)
     except (LookupError):
-        return jsonify(status=NO_FACE)
+        return jsonify(status='NO_FACE')
 
     identified_user_id = identify(face_image)
 
     if (user_id != identified_user_id):
-        return jsonify(status=PRANK_TRY,
+        return jsonify(status='PRANK_TRY',
             identified_user_id=identified_user_id,
             face_count=face_count)
     else:
