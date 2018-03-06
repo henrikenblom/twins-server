@@ -111,7 +111,7 @@ def compare(image, user_id):
     closest_distance = 10
     twin_id = ''
     for i, face_distance in enumerate(face_distances):
-        if (face_distance < closest_distance):
+        if (classes[i] != user_id and face_distance < closest_distance):
             twin_id = classes[i]
             closest_distance = face_distance
 
