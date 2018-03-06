@@ -26,7 +26,7 @@ RUN pip3 install git+https://github.com/ageitgey/face_recognition_models
 
 WORKDIR /app
 
-ADD $PWD/*.py /app
+ADD $PWD/*.py /app/
 
 EXPOSE 3001
 
