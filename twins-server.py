@@ -36,10 +36,11 @@ def compare_by_photo():
             face_count=face_count)
     else:
         twin_id, closest_distance = compare(face_image, user_id)
+        likeness = math.log1p(1 - closest_distance) * 144
         return jsonify(status='OK',
             face_count=face_count,
             twin_id=twin_id,
-            closest_distance=closest_distance)
+            likeness=likeness)
 
 
 def extract_most_significant_face(file_stream):
