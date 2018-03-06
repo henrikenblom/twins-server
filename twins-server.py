@@ -13,6 +13,11 @@ from flask_cors import CORS
 
 MODEL_PATH = 'party_model.dat'
 CLASSES_DIR = '/home/henrik/face-recognition-server/static'
+ORIGINAL_CONSTRAINTS = (1920, 1920)
+DIST_THRESHOLD = 0.5
+SAVE_THRESHOLD = 0.3
+MARGIN = 100
+
 
 app = Flask(__name__)
 CORS(app)
@@ -28,7 +33,6 @@ def compare_by_photo():
         return jsonify(status='NO_FACE')
 
     identified_user_id = identify(face_image)
-    print(identified_user_id)
 
     if (identified_user_id == ''):
         return jsonify(status='NO_FULL_FACE')
@@ -38,7 +42,7 @@ def compare_by_photo():
             face_count=face_count)
     else:
         twin_id, closest_distance = compare(face_image, user_id)
-        likeness = math.log1p(1 - closest_distance) * 144
+        likeness = int(math.log1p(1 - closest_distance) * 154)
         return jsonify(status='OK',
             face_count=face_count,
             twin_id=twin_id,
@@ -47,6 +51,7 @@ def compare_by_photo():
 
 def extract_most_significant_face(file_stream):
     pil_image = rotate_image(Image.open(file_stream))
+    pil_image.thumbnail(ORIGINAL_CONSTRAINTS)
     image = np.array(pil_image)
     face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
 
@@ -64,7 +69,21 @@ def extract_most_significant_face(file_stream):
             selected_location = face_location
 
     top, right, bottom, left = selected_location
-    return image, len(face_locations)
+    bottom += (MARGIN * 2)
+    right += MARGIN
+    left -= MARGIN
+    top -= MARGIN
+
+    if bottom > pil_image.height:
+        bottom = pil_image.height
+    if right > pil_image.width:
+        right = pil_image.width
+    if left < 0:
+        left = 0
+    if top < 0:
+        top = 0
+
+    return image[top:bottom, left:right], len(face_locations)
 
     
 def rotate_image(image):
@@ -90,7 +109,14 @@ def identify(image):
     with open(MODEL_PATH, 'rb') as f:
             knn_clf = pickle.load(f)
     try:
-        user_id = knn_clf.predict(face_recognition.face_encodings(image))[0]
+        faces_encodings = face_recognition.face_encodings(image)
+        closest_distances = knn_clf.kneighbors(faces_encodings, n_neighbors=1)
+        if (closest_distances[0][0][0] <= DIST_THRESHOLD):
+            user_id = knn_clf.predict(faces_encodings)[0]
+            if (closest_distances[0][0][0] <= SAVE_THRESHOLD):
+                save_for_training(image, user_id)
+        else:
+            user_id = ''
     except:
         user_id = ''
     f.close()
@@ -121,6 +147,13 @@ def compare(image, user_id):
             closest_distance = face_distance
 
     return twin_id, closest_distance
+
+
+def save_for_training(image, user_id):
+    file_name = "{}/{}/{}.jpg".format(CLASSES_DIR, user_id, int(time.time() * 1000))
+    pil_image = Image.fromarray(image)
+    pil_image.save(file_name, 'jpeg')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
