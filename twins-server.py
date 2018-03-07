@@ -106,7 +106,7 @@ def rotate_image(image):
 
 
 def identify(image):
-    with open(MODEL_PATH, 'rb') as f:
+    with open(join(CLASSES_DIR, MODEL_PATH), 'rb') as f:
             knn_clf = pickle.load(f)
     try:
         faces_encodings = face_recognition.face_encodings(image)
