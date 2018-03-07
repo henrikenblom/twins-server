@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 MODEL_PATH = 'party_model.dat'
-CLASSES_DIR = '/home/henrik/face-recognition-server/static'
+CLASSES_DIR = 'static'
 ORIGINAL_CONSTRAINTS = (1920, 1920)
 DIST_THRESHOLD = 0.5
 SAVE_THRESHOLD = 0.3
